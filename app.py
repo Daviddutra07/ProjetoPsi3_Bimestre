@@ -3,8 +3,7 @@ from storage import init_app, db
 import secrets
 from flask_login import LoginManager
 from models.users import User
-
-from controllers.empretimo_controller import emprestimo_bp
+from controllers.emprestimo_controller import emprestimo_bp
 from controllers.itens_controller import item_bp
 from controllers.users_controller import user_bp
 from controllers.auth.auth_controller import auth_bp
@@ -19,6 +18,7 @@ login_manager.login_view = "auth.login"
 def load_user(user_id):
     return User.get(user_id)
 
+# inicializa db e cria tabelas
 init_app(app)
 
 app.register_blueprint(emprestimo_bp)

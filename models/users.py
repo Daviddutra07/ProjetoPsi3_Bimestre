@@ -1,4 +1,5 @@
-from app import db
+# models/users.py
+from models import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
 
