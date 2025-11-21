@@ -10,8 +10,10 @@
     <header>
         <nav>
             <a href="{{url_for('home')}}">Inicio</a>
+            <a href="{{url_for('item.itens')}}">Itens</a>
 
             {% if current_user.is_authenticated %}
+            <a href="{{url_for('emprestimo.listar')}}">Meus emprestimos</a>
             <a href="{{url_for('auth.logout')}}">Sair</a>
             {% else %}
                 <a href="{{ url_for('auth.login') }}">Login</a>

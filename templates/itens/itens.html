@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+    <a href="{{ url_for('item.adicionar') }}" class="button-adicionar">Adicionar Novo Item</a>
+
+    {% for item in itens %}
+        {% if item.quantidade >= 0 and item.id not in nao_exibir %} 
+            <div class="item-container"> 
+                <h3>{{ item.nome }}</h3> 
+                <p>Categoria: {{ item.categoria }}</p>
+                {# ATRIBUTO CORRIGIDO AQUI: item.quantidade #}
+                <p>Quantidade disponível: {{ item.quantidade }}</p>
+                
+
+            </div>
+        {% endif %} 
+    {% endfor %} 
+
+{% endblock main %}
