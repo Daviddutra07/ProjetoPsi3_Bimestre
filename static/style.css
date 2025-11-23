@@ -75,10 +75,10 @@ nav {
     color: black;
     display: flex;
     background-color: #7798bb;
-    padding: 10%;
+    padding: 30px;
     border-radius: 2em;
-    margin-top: 60%;
-    gap: 15px;
+    margin-top: 100px;
+    gap: 10px;
     flex-direction: column;
     width: 20em;
     text-transform: uppercase;
@@ -105,7 +105,7 @@ button:hover {
     display: inline-block;
     margin-top: 10px; 
     padding: 10px 20px;
-    background-color: #36679c;
+    background-color: #224871;
     color: white;
     text-decoration: none;
     text-transform: uppercase;
@@ -115,7 +115,8 @@ button:hover {
 }
 
 .button-adicionar:hover {
-    transform: translateY(-5px);
+    background-color: #88aed6;
+    transform: scale(1.05);
     box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 

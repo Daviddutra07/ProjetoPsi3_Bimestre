@@ -5,14 +5,17 @@
     <a href="{{ url_for('item.adicionar') }}" class="button-adicionar">Adicionar Novo Item</a>
 
     {% for item in itens %}
-        {% if item.quantidade >= 0 and item.id not in nao_exibir %} 
+        {% if item.quantidade >= 0 %} 
             <div class="item-container"> 
                 <h3>{{ item.nome }}</h3> 
                 <p>Categoria: {{ item.categoria }}</p>
-                {# ATRIBUTO CORRIGIDO AQUI: item.quantidade #}
                 <p>Quantidade disponível: {{ item.quantidade }}</p>
-                
-
+                <a href="{{ url_for('item.editar', id=item.id) }}" class="button-adicionar">Editar Item</a>
+                <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display: inline;">
+                        <button type="submit" class="button-adicionar">
+                            Excluir
+                        </button>
+                </form>
             </div>
         {% endif %} 
     {% endfor %} 
