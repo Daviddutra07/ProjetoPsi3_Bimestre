@@ -10,7 +10,12 @@
                 <h3>{{ item.nome }}</h3> 
                 <p>Categoria: {{ item.categoria }}</p>
                 <p>Quantidade disponível: {{ item.quantidade }}</p>
-                <a href="{{ url_for('item.editar', id=item.id) }}" class="button-adicionar">Editar Item</a>
+            
+            <form action="{{url_for('emprestimo.adicionar' , id=item.id)}}" class="button-adicionar">
+                <button class="button-adicionar">Solicitar emprestimo</button>
+            </form>
+                
+            <a href="{{ url_for('item.editar', id=item.id) }}" class="button-adicionar">Editar Item</a>
                 <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display: inline;">
                         <button type="submit" class="button-adicionar">
                             Excluir

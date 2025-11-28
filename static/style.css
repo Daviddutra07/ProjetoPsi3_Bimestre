@@ -85,22 +85,6 @@ nav {
     box-shadow: 0 10px 25px;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #36679c;
-    color: white;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease; 
-}
-
-button:hover {
-    background-color: #88aed6;
-    transform: scale(1.05); 
-}
-
 .button-adicionar {
     display: inline-block;
     margin-top: 10px; 
