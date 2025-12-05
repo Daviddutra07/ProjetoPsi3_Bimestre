@@ -11,7 +11,7 @@
                 <p>Categoria: {{ item.categoria }}</p>
                 <p>Quantidade disponível: {{ item.quantidade }}</p>
             
-            <form action="{{url_for('emprestimo.adicionar' , id=item.id)}}" class="button-adicionar">
+            <form action="{{url_for('emprestimo.adicionar' , id=item.id)}}">
                 <button class="button-adicionar">Solicitar emprestimo</button>
             </form>
                 
