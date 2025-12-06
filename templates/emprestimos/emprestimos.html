@@ -1,5 +1,76 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block titulo %} Empréstimos {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/emprestimos/emprestimos.css') }}">
+{% endblock %}
 
-{% block main %}
+{% block conteudo %}
+<main>
 
-{% endblock main %}
+    <h1>Empréstimos Registrados</h1>
+
+    {% include 'includes/mensagens.html' %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Item</th>
+                <th>Retirada</th>
+                <th>Devolução</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for e in emprestimos %}
+            <tr>
+                <td>{{ e.id }}</td>
+                <td>{{ e.user.nome }}</td>
+                <td>{{ e.item.nome }}</td>
+                <td>{{ e.data_emprestimo }}</td>
+                <td>{{ e.data_devolucao or '-' }}</td>
+                <td>{{ e.status }}</td>
+
+                <td>
+
+                    {% if e.user_id == current_user.id %}
+                        {% if e.status != "devolvido" %}
+                        <a class="btn-small" href="{{ url_for('emprestimo.editar', id=e.id) }}">
+                            Editar
+                        </a>
+
+                        <form action="{{ url_for('emprestimo.devolver', id=e.id) }}" 
+                              method="POST" 
+                              style="display:inline;">
+                            <button class="btn btn-devolver" type="submit">
+                                Devolver
+                            </button>
+                        </form>
+                        {% endif %}
+
+                        <form action="{{ url_for('emprestimo.remover', id=e.id) }}" 
+                              method="POST" 
+                              style="display:inline;">
+                            <button class="btn-small danger" type="submit">
+                                Remover
+                            </button>
+                        </form>
+
+                    {% else %}
+
+                        <span style="color: gray; font-size: 0.9rem;">
+                            Não é seu empréstimo
+                        </span>
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+{% endblock %}

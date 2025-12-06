@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-Br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Empréstimos</title>
-    <link rel="stylesheet" href="{{url_for('static' , filename=('style.css'))}}">
+    <title>{% block titulo %}{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    
+    {% block css %}{% endblock %}
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{{url_for('home')}}">Inicio</a>
-            <a href="{{url_for('item.itens')}}">Itens</a>
+    {% include '/includes/navbar.html' %}
 
-            {% if current_user.is_authenticated %}
-            <a href="{{url_for('emprestimo.adicionar')}}">Meus emprestimos</a>
-            <a href="{{url_for('auth.logout')}}">Sair</a>
-            {% else %}
-                <a href="{{ url_for('auth.login') }}">Login</a>
-                <a href="{{ url_for('auth.register') }}">Cadastro</a>
-            {% endif %}
-        </nav>
-
-    </header>
-
-    <main>{% block main %}{% endblock main %}</main>
-
+    <main>
+        {% block conteudo %}{% endblock %}
+    </main>
 </body>
 </html>

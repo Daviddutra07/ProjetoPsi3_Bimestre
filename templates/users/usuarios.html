@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users/usuarios.css') }}">
+{% endblock %}
+
+{% block titulo %} Lista de Usuários {% endblock %}
+
+{% block conteudo %}
+<main>
+
+    {% include 'includes/mensagens.html' %}
+
+    <h1>Gerenciamento de Usuários</h1>
+    <p>Veja, edite ou remova usuários cadastrados no sistema.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for u in usuarios %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.nome }}</td>
+                <td>{{ u.cpf }}</td>
+                <td>{{ u.email }}</td>
+                <td class="acoes">
+                    <a class="btn-small edit" href="{{ url_for('user.editar', id=u.id) }}">Editar</a>
+
+                    <form action="{{ url_for('user.deletar', id=u.id) }}" method="POST">
+                        <button type="submit" class="btn-small delete">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</main>
+{% endblock %}

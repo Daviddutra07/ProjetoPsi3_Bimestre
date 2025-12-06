@@ -1,0 +1,73 @@
+main {
+    max-width: 450px;
+    margin: 15vh auto 0;
+    text-align: center;
+}
+
+main h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+main p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.form-box {
+    background: white;
+    border: 2px solid #c40000;
+    border-radius: 10px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-box label {
+    font-weight: bold;
+    color: #111;
+    text-align: left;
+}
+
+.form-box input {
+    padding: 10px;
+    border: 1.5px solid #111;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-box input:focus {
+    border-color: #c40000;
+}
+
+.form-box button {
+    margin-top: 10px;
+    padding: 10px;
+    background: #c40000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-box button:hover {
+    background: #e00000;
+}
+
+.register-link {
+    margin-top: 15px;
+}
+
+.register-link a {
+    color: #c40000;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}

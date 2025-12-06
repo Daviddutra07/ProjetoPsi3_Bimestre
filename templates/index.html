@@ -1,9 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block main %}
-<div class="message">
-    <h1>Seja Bem Vindo ao sistema de emprestimos Ricaom's</h1>
-    <p>Conosco você terá uma ampla variedade de equipamentos eletrônicos para a realização de seus projetos.</p>
-    <p>Garantimos sempre o acompanhamento de quem está utilizando cada equpiamento, datas de retirada e devolução, garantindo organização, segurança e eficiência no uso dos recursos</p>
-</div>
-{% endblock main %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block titulo %} Central de Controle de Empréstimos {% endblock %}
+
+{% block conteudo %}
+<main>
+
+    <h1>Bem-vindo à Central de Controle Escolar</h1>
+    <p>Sistema de gestão de itens, empréstimos e usuários.</p>
+
+    {% include 'includes/mensagens.html' %}
+
+    {% if current_user.is_authenticated %}
+        <p>Você está logado como <strong>{{ current_user.nome }}</strong>.</p>
+
+        <a href="{{ url_for('item.itens') }}">Ver Itens</a>
+        <a href="{{ url_for('emprestimo.listar') }}">Ver Empréstimos</a>
+        <a href="{{ url_for('user.listar') }}">Gerenciar Usuários</a>
+        <a href="{{ url_for('auth.logout') }}">Sair</a>
+    {% else %}
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.register') }}">Cadastrar Usuário</a>
+    {% endif %}
+
+</main>
+{% endblock %}

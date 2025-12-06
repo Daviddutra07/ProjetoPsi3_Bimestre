@@ -1,0 +1,61 @@
+main {
+    max-width: 900px;
+    margin: 15vh auto;
+    text-align: center;
+}
+
+h1 {
+    color: #b30000;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #b30000;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ff0000;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+th {
+    background: #111;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    background: black;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-small:hover {
+    background: #444;
+}
+
+.danger {
+    background: #b30000 !important;
+}
+
+.danger:hover {
+    background: #ff0000 !important;
+}

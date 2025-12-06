@@ -1,0 +1,26 @@
+<nav id="navbar">
+    <h1>Central de Emprestimos</h1>
+
+    <div class="links">
+
+        <!-- Home -->
+        <a href="{{ url_for('home') }}">INÍCIO</a>
+
+        <!-- Itens -->
+        <a href="{{ url_for('item.itens') }}">ITENS</a>
+        <a href="{{ url_for('item.adicionar') }}">ADICIONAR ITEM</a>
+
+        <!-- Empréstimos -->
+        <a href="{{ url_for('emprestimo.listar') }}">EMPRÉSTIMOS</a>
+
+        <!-- Usuários -->
+        <a href="{{ url_for('user.listar') }}">USUÁRIOS</a>
+
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.logout') }}">SAIR</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">LOGIN</a>
+            <a href="{{ url_for('auth.register') }}">REGISTRAR</a>
+        {% endif %}
+    </div>
+</nav>

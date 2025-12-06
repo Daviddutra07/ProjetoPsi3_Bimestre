@@ -1,16 +1,32 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block main %}
-<form action="{{ url_for('auth.login') }}" method="post">
-    <div class="login">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email">
+{% block titulo %} Login {% endblock %}
 
-        <label for="senha">Senha</label>
-        <input type="password" id="senha" name="senha">
-        
-        <button>Iniciar sessão</button>
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth/login.css') }}">
+{% endblock %}
 
-    </div>
-</form>
-{% endblock main %}
+{% block conteudo %}
+<main>
+
+    <h1>Entrar</h1>
+    <p>Acesse sua conta para continuar.</p>
+
+    {% include 'includes/mensagens.html' %}
+
+    <form method="POST" class="form-box">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Senha:</label>
+        <input type="password" name="senha" required>
+
+        <button type="submit">Entrar</button>
+
+        <p class="register-link">
+            Não tem conta? <a href="{{ url_for('auth.register') }}">Cadastrar-se</a>
+        </p>
+    </form>
+
+</main>
+{% endblock %}

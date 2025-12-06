@@ -1,0 +1,45 @@
+
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    width: 100%;
+    background-color: white;
+    padding: 0 3%;
+    border-bottom: 3.5px solid #b30000; /* vermelho */
+    z-index: 999;
+    box-sizing: border-box;
+    height: 10vh;
+}
+
+nav .links {
+    display: flex;
+    width: 80%;
+    margin-left: 10px;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+nav .links a {
+    font-size: 15px;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 8px;
+}
+
+nav .links a:hover {
+    border-bottom: 2px solid #b30000;
+}
+
+nav h1 {
+    font-size: 22px;
+    color: #b30000;
+    font-weight: bold;
+    margin: 0;
+}
+

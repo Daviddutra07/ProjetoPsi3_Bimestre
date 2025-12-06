@@ -1,0 +1,39 @@
+main {
+    max-width: 600px;
+    margin: 15vh auto;
+}
+
+h1 {
+    text-align: center;
+    color: #b30000;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #111;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #777;
+    border-radius: 5px;
+}
+
+.btn {
+    padding: 12px;
+    background: #b30000;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn:hover {
+    background: #ff0000;
+}

@@ -1,0 +1,35 @@
+main {
+    max-width: 900px;
+    margin: 15vh auto 0 auto; /* distância da navbar */
+    padding: 0 20px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+main h1 {
+    font-size: 36px;
+    color: #8B0000; /* vermelho escuro */
+    margin-bottom: 15px;
+}
+
+main p {
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+main a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 25px;
+    background-color: #111;  /* preto */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+main a:hover {
+    background-color: #8B0000; /* vermelho escuro */
+}

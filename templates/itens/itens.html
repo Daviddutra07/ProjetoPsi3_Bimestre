@@ -1,28 +1,55 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% block titulo %} Lista de Itens {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/items/items.css') }}">
+{% endblock %}
 
-{% block main %}
+{% block conteudo %}
+<main>
+    <h1>Itens Cadastrados</h1>
 
-    <a href="{{ url_for('item.adicionar') }}" class="button-adicionar">Adicionar Novo Item</a>
+    {% include 'includes/mensagens.html' %}
 
-    {% for item in itens %}
-        {% if item.quantidade >= 0 %} 
-            <div class="item-container"> 
-                <h3>{{ item.nome }}</h3> 
-                <p>Categoria: {{ item.categoria }}</p>
-                <p>Quantidade disponível: {{ item.quantidade }}</p>
-            
-            <form action="{{url_for('emprestimo.adicionar' , id=item.id)}}">
-                <button class="button-adicionar">Solicitar emprestimo</button>
-            </form>
-                
-            <a href="{{ url_for('item.editar', id=item.id) }}" class="button-adicionar">Editar Item</a>
-                <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display: inline;">
-                        <button type="submit" class="button-adicionar">
-                            Excluir
+    <a class="btn" href="{{ url_for('item.adicionar') }}">Adicionar Item</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.categoria }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>
+                    <a class="btn-small" href="{{ url_for('item.editar', id=item.id) }}">Editar</a>
+
+                    <form action="{{ url_for('emprestimo.adicionar') }}" method="POST">
+                        <button type="submit" name="item_id" value="{{ item.id }}" class="btn-small">
+                            Pegar Emprestado
                         </button>
-                </form>
-            </div>
-        {% endif %} 
-    {% endfor %} 
+                    </form>
 
-{% endblock main %}
+
+
+
+                    <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display:inline;">
+                        <button class="btn-small danger" type="submit">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
+{% endblock %}
