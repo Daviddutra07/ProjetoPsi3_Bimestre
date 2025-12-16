@@ -1,27 +1,41 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
+from decorators import admin_required
 from models.emprestimos import Emprestimo
 from models.users import User
 from models.itens import Item
-from app import db
+from storage import db
 
 emprestimo_bp = Blueprint("emprestimo", __name__, url_prefix="/emprestimos", template_folder="templates/emprestimos")
 
 @emprestimo_bp.route("/")
 @login_required
 def listar():
-    emprestimos = Emprestimo.all()
+
+    if current_user.is_admin():
+        emprestimos = Emprestimo.all()
+    else:
+        emprestimos = Emprestimo.query.filter_by(user_id =current_user.id).all()
+
     return render_template("emprestimos/emprestimos.html", emprestimos=emprestimos, User=User,Item=Item)
 
 @emprestimo_bp.route("/adicionar", methods=["POST"])
 @login_required
 def adicionar():
+    LIMITE_EMPRESTIMOS = 3
+
     item_id = request.form.get("item_id")
-    
+
     if not item_id:
         flash("Item inválido.", "error")
+        return redirect(url_for("item.itens"))    
+
+    total_ativos = Emprestimo.ativos_por_usuario(current_user.id)
+
+    if total_ativos >= LIMITE_EMPRESTIMOS:
+        flash(f"Você atingiu o limite de {LIMITE_EMPRESTIMOS} empréstimos ativos.","error") 
         return redirect(url_for("item.itens"))
 
     item = Item.get(int(item_id))
@@ -33,7 +47,6 @@ def adicionar():
     emprestimo = Emprestimo(
         user_id=current_user.id,
         item_id=item_id,
-        data_emprestimo=date.today(),
         status="pendente"
     )
     emprestimo.save()
@@ -42,42 +55,6 @@ def adicionar():
 
     flash("Empréstimo registrado com sucesso!", "success")
     return redirect(url_for("emprestimo.listar"))
-
-
-@emprestimo_bp.route("/editar/<int:id>", methods=["GET", "POST"])
-@login_required
-def editar(id):
-    emprestimo = Emprestimo.get(id)
-    usuarios = User.all()
-    itens = Item.all()
-
-    if not emprestimo:
-        flash("Empréstimo não encontrado!", "error")
-        return redirect(url_for("emprestimo.listar"))
-
-    if request.method == "POST":
-        try:
-            user_id = request.form.get("usuario_id")
-            item_id = request.form.get("item_id")
-            status = request.form.get("status") or "pendente"
-            data_devolucao = request.form.get("data_devolucao") or None
-
-            emprestimo.update(
-                user_id=user_id,
-                item_id=item_id,
-                status=status,
-                data_devolucao=data_devolucao
-            )
-
-            flash("Empréstimo atualizado com sucesso!", "success")
-            return redirect(url_for("emprestimo.listar"))
-
-        except Exception:
-            db.session.rollback()
-            flash("Erro ao atualizar empréstimo.", "error")
-            return redirect(url_for("emprestimo.editar", id=id))
-
-    return render_template("emprestimos/editar.html", emprestimo=emprestimo, usuarios=usuarios, itens=itens)
 
 @emprestimo_bp.route("/devolver/<int:id>", methods=["POST"])
 @login_required
@@ -98,7 +75,7 @@ def devolver(id):
 
     emp.update(
         status="devolvido",
-        data_devolucao=date.today()
+        data_devolucao=datetime.now()
     )
 
     item.update(quantidade=item.quantidade + 1)
@@ -108,7 +85,7 @@ def devolver(id):
 
 
 @emprestimo_bp.route("/remover/<int:id>", methods=["POST"])
-@login_required
+@admin_required
 def remover(id):
     emprestimo = Emprestimo.get(id)
     if not emprestimo:

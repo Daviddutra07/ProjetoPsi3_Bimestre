@@ -30,18 +30,14 @@
                 <td>{{ e.id }}</td>
                 <td>{{ e.user.nome }}</td>
                 <td>{{ e.item.nome }}</td>
-                <td>{{ e.data_emprestimo }}</td>
-                <td>{{ e.data_devolucao or '-' }}</td>
+                <td>{{ e.data_emprestimo.strftime("%d/%m/%Y %H:%M") }}</td>
+                <td>{{ e.data_devolucao.strftime("%d/%m/%Y %H:%M") if e.data_devolucao else "-" }}</td>
                 <td>{{ e.status }}</td>
 
                 <td>
 
-                    {% if e.user_id == current_user.id %}
+                    {% if e.user_id == current_user.id or current_user.is_admin() %}
                         {% if e.status != "devolvido" %}
-                        <a class="btn-small" href="{{ url_for('emprestimo.editar', id=e.id) }}">
-                            Editar
-                        </a>
-
                         <form action="{{ url_for('emprestimo.devolver', id=e.id) }}" 
                               method="POST" 
                               style="display:inline;">
@@ -51,17 +47,18 @@
                         </form>
                         {% endif %}
 
-                        <form action="{{ url_for('emprestimo.remover', id=e.id) }}" 
-                              method="POST" 
-                              style="display:inline;">
-                            <button class="btn-small danger" type="submit">
-                                Remover
-                            </button>
-                        </form>
-
+                        {% if current_user.is_admin() %}
+                            <form action="{{ url_for('emprestimo.remover', id=e.id) }}" 
+                                  method="POST" 
+                                  style="display:inline;">
+                                <button class="btn-small danger" type="submit">
+                                    Remover
+                                </button>
+                            </form>
+                        {% endif %}            
                     {% else %}
 
-                        <span style="color: gray; font-size: 0.9rem;">
+                        <span style="color: rgb(20, 19, 19); font-size: 0.9rem;">
                             Não é seu empréstimo
                         </span>
                     {% endif %}

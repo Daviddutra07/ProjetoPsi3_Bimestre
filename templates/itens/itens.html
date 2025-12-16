@@ -8,9 +8,17 @@
 <main>
     <h1>Itens Cadastrados</h1>
 
-    {% include 'includes/mensagens.html' %}
+    {% include 'includes/mensagens.html' %} 
 
-    <a class="btn" href="{{ url_for('item.adicionar') }}">Adicionar Item</a>
+    {% if current_user.is_admin() %}
+        <a class="btn" href="{{ url_for('item.adicionar') }}">Adicionar Item</a>
+    {% endif %}
+    
+    <form method="get" class="busca-itens">
+        <input type="text" name="q"placeholder="Buscar item" value="{{ q }}">
+        <button type="submit">Buscar</button>
+    </form>
+
 
     <table>
         <thead>
@@ -31,7 +39,14 @@
                 <td>{{ item.categoria }}</td>
                 <td>{{ item.quantidade }}</td>
                 <td>
-                    <a class="btn-small" href="{{ url_for('item.editar', id=item.id) }}">Editar</a>
+
+                    {% if current_user.is_admin() %}
+                        <a class="btn-small" href="{{ url_for('item.editar', id=item.id) }}">Editar</a>
+                    
+                        <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display:inline;">
+                            <button class="btn-small danger" type="submit">Remover</button>
+                        </form>
+                    {% endif %}
 
                     <form action="{{ url_for('emprestimo.adicionar') }}" method="POST">
                         <button type="submit" name="item_id" value="{{ item.id }}" class="btn-small">
@@ -39,12 +54,6 @@
                         </button>
                     </form>
 
-
-
-
-                    <form action="{{ url_for('item.remover', id=item.id) }}" method="POST" style="display:inline;">
-                        <button class="btn-small danger" type="submit">Remover</button>
-                    </form>
                 </td>
             </tr>
             {% endfor %}

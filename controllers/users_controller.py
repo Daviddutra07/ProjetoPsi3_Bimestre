@@ -10,6 +10,7 @@ user_bp = Blueprint("user", __name__, url_prefix="/users", template_folder="temp
 @login_required
 def listar():
     usuarios = User.all()
+    print(current_user.perfil)
     return render_template("users/usuarios.html", usuarios=usuarios)
 
 @user_bp.route("/editar/<int:id>", methods=["GET", "POST"])

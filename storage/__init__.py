@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
+from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
 
@@ -19,3 +20,17 @@ def init_app(app):
 
     with app.app_context():
         db.create_all()
+
+        from models.users import User
+
+        admin = User.query.filter_by(email="admin@admin.com").first()
+        if not admin:
+            admin = User(
+                email="admin@admin.com",
+                nome="Administrador",
+                senha_hash=generate_password_hash("admin"),
+                perfil="admin"
+            )
+            db.session.add(admin)
+            
+            db.session.commit()

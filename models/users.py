@@ -10,6 +10,10 @@ class User(UserMixin, db.Model):
     senha_hash = db.Column("usr_senha", db.String(200), nullable=False)
     nome = db.Column("usr_nome", db.String(150))
     cpf = db.Column("usr_cpf", db.String(14))
+    perfil = db.Column("usr_perfil", db.String(20), default="usuario")
+
+    def is_admin(self):
+        return self.perfil == "admin"
 
     @classmethod
     def get(cls, user_id):

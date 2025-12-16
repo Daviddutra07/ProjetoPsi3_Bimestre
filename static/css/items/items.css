@@ -59,3 +59,40 @@ td {
 .danger:hover {
     background: #ff0000 !important;
 }
+
+
+.busca-itens {
+    margin: 25px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.busca-itens input[type="text"] {
+    width: 260px;
+    padding: 10px 12px;
+    border: 2px solid #111;
+    border-radius: 5px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.busca-itens input[type="text"]:focus {
+    border-color: #b30000;
+}
+
+.busca-itens button {
+    background: #111;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.busca-itens button:hover {
+    background: #b30000;
+}

@@ -7,6 +7,18 @@ class Item(db.Model):
     categoria = db.Column("itm_categoria", db.String(50), nullable = True)
     quantidade = db.Column("itm_quantidade", db.Integer, nullable=False)
 
+    @classmethod
+    def buscar(cls, termo=None):
+        query = cls.query
+
+        if termo:
+            query = query.filter(
+                cls.nome.ilike(f"%{termo}%")
+            )
+
+        return query.order_by(cls.nome).all()
+
+
     def save(self):
         if not self.id:
             db.session.add(self)

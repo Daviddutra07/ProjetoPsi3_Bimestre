@@ -1,21 +1,24 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required
-
 from models.itens import Item
+from decorators import admin_required
 
 item_bp = Blueprint("item", __name__, url_prefix='/itens', template_folder='templates/itens')
 
 @item_bp.route("/")
 @login_required
 def itens():
-    itens = Item.all()
-    return render_template("itens/itens.html", itens=itens)
+    q = request.args.get("q", "").strip()
+
+    itens = Item.buscar(q)
+
+    return render_template("itens/itens.html",itens=itens,q=q)
 
 @item_bp.route("/adicionar", methods = ["GET", "POST"])
-@login_required
+@admin_required
 def adicionar():
     if request.method == "POST":
-        item = Item(nome=request.form["nome"], categoria=(request.form["categoria"]), quantidade = int(request.form["quantidade"]))
+        item = Item(nome=request.form["nome"], categoria=(request.form["categoria"]), quantidade = int(request.form["quantidade"], 0))
 
         item.save()
         flash("Produto adicionado com sucesso!", "success")
@@ -24,7 +27,7 @@ def adicionar():
     return render_template("itens/adicionar.html")
 
 @item_bp.route("/editar/<int:id>", methods = ["GET", "POST"])
-@login_required
+@admin_required
 def editar(id):
     i = Item.get(id)
     if not i:
@@ -39,7 +42,7 @@ def editar(id):
     return render_template('itens/editar.html', item=i)
 
 @item_bp.route('/deletar/<int:id>', methods = ["POST"])
-@login_required
+@admin_required
 def remover(id):
     i = Item.get(id)
 
@@ -48,7 +51,7 @@ def remover(id):
             i.delete()
             flash("Item removido com sucesso!", "success")
         except:
-            flash(f"Não foi possível remover este gênero.", "error")
+            flash(f"Não foi possível remover este item.", "error")
     else:
         flash(f"Item não encontrado, tente novamente.", "error")
     return redirect(url_for("item.itens"))

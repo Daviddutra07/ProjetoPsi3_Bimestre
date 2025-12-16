@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from models import db
 
 class Emprestimo(db.Model):
@@ -7,8 +7,8 @@ class Emprestimo(db.Model):
     id = db.Column("l_id", db.Integer, primary_key=True)
     user_id = db.Column("emp_usr_id", db.Integer, db.ForeignKey("tb_usuarios.usr_id"), nullable=False)
     item_id = db.Column("emp_itm_id", db.Integer, db.ForeignKey("tb_itens.itm_id"))
-    data_emprestimo = db.Column( "emp_data_emprestimo", db.Date, default=date.today)
-    data_devolucao = db.Column("emp_data_devolucao",db.Date,nullable=True)
+    data_emprestimo = db.Column( "emp_data_emprestimo", db.DateTime, default=datetime.now)
+    data_devolucao = db.Column("emp_data_devolucao",db.DateTime,nullable=True)
     status = db.Column("emp_status", db.String(20),default="pendente")  # pendente, devolvido
     user = db.relationship("User", backref="emprestimos")
     item = db.relationship("Item", backref="emprestimos")
@@ -50,3 +50,7 @@ class Emprestimo(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    @classmethod
+    def ativos_por_usuario(cls, user_id):
+        return cls.query.filter_by(user_id=user_id,status="pendente").count()
