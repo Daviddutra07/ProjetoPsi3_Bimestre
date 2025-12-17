@@ -21,6 +21,10 @@ def load_user(user_id):
 # inicializa db e cria tabelas
 init_app(app)
 
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template("errors/403.html"), 403
+
 app.register_blueprint(emprestimo_bp)
 app.register_blueprint(item_bp)
 app.register_blueprint(user_bp)
